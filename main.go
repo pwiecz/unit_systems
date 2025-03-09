@@ -11,9 +11,11 @@ import (
 	"gonum.org/v1/gonum/stat/combin"
 )
 
+// Unit represents a physical unit, with a name and a list of coefficients.
+// These coefficients express the unit as a combination of SI base units.
 type Unit struct {
-	Name         string `json:"name"`
-	Coefficients []float64  `json:"coeffs"`
+	Name         string    `json:"name"`
+	Coefficients []float64 `json:"coeffs"`
 }
 
 type Units struct {
@@ -44,11 +46,11 @@ func main() {
 	siUnitCount := len(units.SiUnits)
 	for _, unit := range units.Units {
 		if len(unit.Coefficients) != siUnitCount {
-			log.Fatal("unit %s has should have %d coefficients, but has %d", unit.Name, siUnitCount, len(unit.Coefficients))
+			log.Fatalf("unit %s has should have %d coefficients, but has %d", unit.Name, siUnitCount, len(unit.Coefficients))
 		}
 	}
 	if len(units.Units) < siUnitCount {
-		log.Fatal("there should be at least as many units as SI units (%d), but there are %d", siUnitCount, len(units.Units))
+		log.Fatalf("there should be at least as many units as SI units (%d), but there are %d", siUnitCount, len(units.Units))
 	}
 
 	var bestUnits []string
@@ -66,13 +68,16 @@ combinations:
 				m.Set(j, i, coeff)
 			}
 		}
+		// For every unit not in the candidate base set, try to express it in terms of the candidate base units.
 		for i, unit := range units.Units {
 			if slices.Contains(baseUnits, i) {
 				continue
 			}
 			coeffs := mat.NewDense(siUnitCount, 1, unit.Coefficients)
-			resultSlice := make([]float64, 3)
+			resultSlice := make([]float64, siUnitCount)
 			result := mat.NewDense(siUnitCount, 1, resultSlice)
+			// Solve the linear system: m * x = coeffs.
+			// If the system does not have a solution, the candidate base units are not independent.
 			if err := result.Solve(m, coeffs); err != nil {
 				log.Print("Units ", unitNames, " are not independent")
 				continue combinations
