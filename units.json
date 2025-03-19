@@ -6,7 +6,7 @@
 	{"name": "t", "coeffs": [0, 0, 1]},
 	{"name": "p", "coeffs": [1, 1, -1]},
 	{"name": "v", "coeffs": [1, 0, -1]},
-	{"name": "L", "coeffs": [2, 1, -1]},
+	{"name": "h", "coeffs": [2, 1, -1]},
 	{"name": "G", "coeffs": [3, -1, -2]}
     ]
 }
