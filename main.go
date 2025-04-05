@@ -3,9 +3,9 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"log"
 	"os"
-	"slices"
 
 	"gonum.org/v1/gonum/mat"
 	"gonum.org/v1/gonum/stat/combin"
@@ -53,7 +53,7 @@ func main() {
 		log.Fatalf("there should be at least as many units as SI units (%d), but there are %d", siUnitCount, len(units.Units))
 	}
 
-	var bestUnits []string
+	var bestUnits [][]string
 	var bestScore int
 	gen := combin.NewCombinationGenerator(len(units.Units), siUnitCount)
 combinations:
@@ -68,11 +68,8 @@ combinations:
 				m.Set(j, i, coeff)
 			}
 		}
-		// For every unit not in the candidate base set, try to express it in terms of the candidate base units.
-		for i, unit := range units.Units {
-			if slices.Contains(baseUnits, i) {
-				continue
-			}
+		// For every unit, try to express it in terms of the candidate base units.
+		for _, unit := range units.Units {
 			coeffs := mat.NewDense(siUnitCount, 1, unit.Coefficients)
 			resultSlice := make([]float64, siUnitCount)
 			result := mat.NewDense(siUnitCount, 1, resultSlice)
@@ -88,11 +85,13 @@ combinations:
 				}
 			}
 		}
-		log.Print("Score for units ", unitNames, " is ", score)
+		fmt.Println("Score for units ", unitNames, " is ", score)
 		if bestUnits == nil || score < bestScore {
-			bestUnits = unitNames
+			bestUnits = [][]string{unitNames}
 			bestScore = score
+		} else if score == bestScore {
+			bestUnits = append(bestUnits, unitNames)
 		}
 	}
-	log.Print("Best units: ", bestUnits, " score: ", bestScore)
+	fmt.Println("Best units: ", bestUnits, " score: ", bestScore)
 }
