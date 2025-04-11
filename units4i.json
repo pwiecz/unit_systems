@@ -1,17 +1,17 @@
 {
     "si_units": ["l", "m", "t", "I"],
     "units": [
-        {"name": "l", "coeffs": [1, 0, 0, 0]},
-        {"name": "m", "coeffs": [0, 1, 0, 0]},
-        {"name": "t", "coeffs": [0, 0, 1, 0]},
-        {"name": "I", "coeffs": [0, 0, 0, 1]},
-        {"name": "p", "coeffs": [1, 1, -1, 0]},
-        {"name": "v", "coeffs": [1, 0, -1, 0]},
-        {"name": "h", "coeffs": [2, 1, -1, 0]},
-        {"name": "G", "coeffs": [3, -1, -2, 0]},
-        {"name": "q", "coeffs": [0, 0, 1, 1]},
-        {"name": "epsilon", "coeffs": [-3, -1, 4, 2]},
-        {"name": "mu", "coeffs": [1, 1, -2, -2]},
-        {"name": "Z", "coeffs": [2, 1, -3, -2]}
+        {"name": "l", "exponents": [1, 0, 0, 0]},
+        {"name": "m", "exponents": [0, 1, 0, 0]},
+        {"name": "t", "exponents": [0, 0, 1, 0]},
+        {"name": "I", "exponents": [0, 0, 0, 1]},
+        {"name": "p", "exponents": [1, 1, -1, 0]},
+        {"name": "v", "exponents": [1, 0, -1, 0]},
+        {"name": "h", "exponents": [2, 1, -1, 0]},
+        {"name": "G", "exponents": [3, -1, -2, 0]},
+        {"name": "q", "exponents": [0, 0, 1, 1]},
+        {"name": "epsilon", "exponents": [-3, -1, 4, 2]},
+        {"name": "mu", "exponents": [1, 1, -2, -2]},
+        {"name": "Z", "exponents": [2, 1, -3, -2]}
     ]
 }

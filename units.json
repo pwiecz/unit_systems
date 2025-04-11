@@ -1,12 +1,12 @@
 {
     "si_units": ["l", "m", "t"],
     "units": [
-	{"name": "l", "coeffs": [1, 0, 0]},
-	{"name": "m", "coeffs": [0, 1, 0]},
-	{"name": "t", "coeffs": [0, 0, 1]},
-	{"name": "p", "coeffs": [1, 1, -1]},
-	{"name": "v", "coeffs": [1, 0, -1]},
-	{"name": "h", "coeffs": [2, 1, -1]},
-	{"name": "G", "coeffs": [3, -1, -2]}
+	{"name": "l", "exponents": [1, 0, 0]},
+	{"name": "m", "exponents": [0, 1, 0]},
+	{"name": "t", "exponents": [0, 0, 1]},
+	{"name": "p", "exponents": [1, 1, -1]},
+	{"name": "v", "exponents": [1, 0, -1]},
+	{"name": "h", "exponents": [2, 1, -1]},
+	{"name": "G", "exponents": [3, -1, -2]}
     ]
 }
