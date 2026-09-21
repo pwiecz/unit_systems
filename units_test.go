@@ -1,13 +1,14 @@
 package main
 
 import (
-	"math"
+	"math/big"
 	"slices"
 	"testing"
 )
 
-func almostEqual(lhs float64, rhs float64) bool {
-	return math.Abs(lhs-rhs) < 0.00001
+func equal(lhs *big.Rat, rhs float64) bool {
+	rhsBig := new(big.Rat).SetFloat64(rhs)
+	return lhs.Sub(lhs, rhsBig).Num().Sign() == 0
 
 }
 
@@ -22,7 +23,7 @@ func TestExpressUnitAsSIUnits(t *testing.T) {
 	siBaseUnits := []Unit{length, mass, time}
 	for _, unit := range allUnits {
 		exponents := ExpressUnit(unit, siBaseUnits)
-		if !slices.EqualFunc(exponents, unit.Exponents, almostEqual) {
+		if !slices.EqualFunc(exponents, unit.Exponents, equal) {
 			t.Error("Unit ", unit.Name, "expected to have exponents", unit.Exponents, ", but has", exponents)
 		}
 	}
@@ -37,7 +38,7 @@ func TestExpressUnitAsComplexUnits(t *testing.T) {
 		length := Unit{"l", []float64{1, 0, 0}}
 		lengthExponents := ExpressUnit(length, baseUnits)
 		expectedLengthExponents := []float64{-0.5, 0.5, 0.5}
-		if !slices.EqualFunc(lengthExponents, expectedLengthExponents, almostEqual) {
+		if !slices.EqualFunc(lengthExponents, expectedLengthExponents, equal) {
 			t.Error("Length expected to have exponents", expectedLengthExponents, ", but has", lengthExponents)
 		}
 	}
@@ -45,7 +46,7 @@ func TestExpressUnitAsComplexUnits(t *testing.T) {
 		speed := Unit{"v", []float64{1, 0, -1}}
 		speedExponents := ExpressUnit(speed, baseUnits)
 		expectedSpeedExponents := []float64{-0.5, -0.5, 0.5}
-		if !slices.EqualFunc(speedExponents, expectedSpeedExponents, almostEqual) {
+		if !slices.EqualFunc(speedExponents, expectedSpeedExponents, equal) {
 			t.Error("Speed expected to have exponents", expectedSpeedExponents, ", but has", speedExponents)
 		}
 	}
@@ -53,7 +54,7 @@ func TestExpressUnitAsComplexUnits(t *testing.T) {
 		momentum := Unit{"p", []float64{1, 1, -1}}
 		momentumExponents := ExpressUnit(momentum, baseUnits)
 		expectedMomentumExponents := []float64{0.5, -0.5, 0.5}
-		if !slices.EqualFunc(momentumExponents, expectedMomentumExponents, almostEqual) {
+		if !slices.EqualFunc(momentumExponents, expectedMomentumExponents, equal) {
 			t.Error("Momentum expected to have exponents", expectedMomentumExponents, ", but has", momentumExponents)
 		}
 	}
